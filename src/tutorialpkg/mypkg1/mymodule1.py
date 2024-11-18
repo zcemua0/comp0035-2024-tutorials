@@ -7,6 +7,10 @@ import sys
 from pathlib import Path
 import pandas as pd
 
+def describe_dataframe(df):
+    print(df.describe())
+    print(df.shape)
+
 if __name__ == '__main__':
     
     # Locate the data file `paralmpics_raw.csv` and npc files relative to
@@ -19,15 +23,19 @@ if __name__ == '__main__':
     )
     npc_csv = Path(__file__).parent.parent.joinpath("data", "npc_codes.csv")
     
-    # Read the data from the files into a Pandas dataframe. Version includes error handling for the file read
+    # Error handling for the file read
     try:
         paralympics_datafile_csv = Path(__file__).parent.parent.joinpath("data", "paralympics_events_raw.csv")
-        events_csv_df = pd.read_csv(paralympics_datafile_csv)
     except FileNotFoundError as e:
         print(f"File not found. Please check the file path. Error: {e}")
-
+    
+    # Read the data from the files into a Pandas dataframe. 
+    events_csv_df = pd.read_csv(paralympics_datafile_csv)
     events_excel_df = pd.read_excel(paralympics_datafile_excel)
     medal_standings_df = pd.read_excel(paralympics_datafile_excel, sheet_name="medal_standings")
+    
+    # Call the function to describe the dataframe
+    describe_dataframe(events_csv_df)
      
         
     # The functions are in the modules in mypkg2. You will need to import them.
